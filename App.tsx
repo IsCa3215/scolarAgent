@@ -1,20 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
+import React, { useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import AppNavigator from './src/navigation/AppNavigator';
+import useAuthStore from './src/store/authStore';
+import { LogBox } from 'react-native';
 
-export default function App() {
+const App: React.FC = () => {
+  const loadToken = useAuthStore((state) => state.loadToken);
+  
+  useEffect(() => {
+    const initializeApp = async () => {
+      try {
+        await loadToken();
+      } catch (error) {
+        console.error('Error inicializando la app:', error);
+      }
+    };
+    
+    initializeApp();
+  }, [loadToken]);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+        <AppNavigator />
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
