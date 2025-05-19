@@ -4,6 +4,5 @@ const { register, login } = require('../controller/authController');
 
 router.post('/register', register);
 router.post('/login', login);
-router.post('/fetchEvents', )
 
 module.exports = router;

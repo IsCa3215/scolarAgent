@@ -3,13 +3,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import useAuthStore from '../store/authStore';
 import { LoginScreen } from '../screens/LoginScreen';
-import TabsNavigator from './TabsNavigator'; 
+import TabsNavigator from './TabsNavigator';
 import { StatusBar } from 'react-native';
 
 export type RootStackParamList = {
   LoginScreen: undefined;
   CalendarScreen: undefined;
   Tabs: undefined;
+  EventScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -19,8 +20,8 @@ const AppNavigator = () => {
   const loadToken = useAuthStore((state) => state.loadToken);
 
   useEffect(() => {
-    loadToken(); 
-  }, []);
+    loadToken();
+  }, [loadToken]);
 
   return (
     <NavigationContainer>
@@ -32,6 +33,7 @@ const AppNavigator = () => {
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
         )}
         <Stack.Screen name="CalendarScreen" component={TabsNavigator} />
+        <Stack.Screen name="EventScreen" component={TabsNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
   );
